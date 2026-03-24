@@ -1,48 +1,42 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 const Weather = () => {
-  const [city, setCity] = useState();
-  const [weather, setWeather] = useState();
+  const [task, setTask] = useState("");
+  const [list, setList] = useState([]);
 
-  const handleCityChange = (e) => {
-    setCity(e.target.value);
+  const addTask = () => {
+    if (task.trim() === "") return;
+    setList([...list, task]);
+    setTask("");
   };
 
-  const fetchWeather = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${"508183e3206ca0eedabcea99f52f119b"}`,
-      );
-      setWeather(response);
-    } catch (error) {
-      console.log("error fetching", error);
-    }
-  };
-  const handleClick = () => {
-    fetchWeather();
+  const deleteTask = (index) => {
+    const newList = list.filter((_, i) => i !== index);
+    setList(newList);
   };
 
   return (
-    <div className="weather-container">
+    <div>
+      <h2>Todo App</h2>
+
       <input
         type="text"
-        placeholder="Enter city name"
-        value={city}
-        onChange={handleCityChange}
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
       />
 
-      <button onClick={handleClick}>Get Weather</button>
-      {weather && (
-        <>
-          <div>
-            <h3>{weather.data.name}</h3>
-            <p>{weather.data.main.temp}</p>
-          </div>
-        </>
-      )}
+      <button onClick={addTask}>Add</button>
+
+      <ul>
+        {list.map((item, index) => (
+          <li key={index}>
+            {item}
+            <button onClick={() => deleteTask(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default Weather;
+export default Todo;

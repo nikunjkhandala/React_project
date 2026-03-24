@@ -1,0 +1,21 @@
+
+.nav{
+  display: flex;
+  padding: 15px;
+ /* justify-content: space-between; */
+  background-color: darkcyan;
+  color: #f1f8ff;
+}
+
+.pages{
+  padding: 6px;
+}
+
+.nav a{
+  color: rgb(255, 255, 255);
+  gap: 4px;
+}
+
+h1{
+  font-size: large;
+}
